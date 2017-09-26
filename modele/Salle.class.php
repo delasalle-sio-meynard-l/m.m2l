@@ -38,10 +38,10 @@ class Salle
     public function setRoom_name($uneRoomName) {$this->room_name = $uneRoomName;}
     
     public function getCapacity() {return $this->capacity;}
-    public function setCapacity($uneCapacity) {$this->room_name = $uneCapacity;}
+    public function setCapacity($uneCapacity) {$this->capacity = $uneCapacity;}
     
     public function getAreaName() {return $this->area_name;}
-    public function setAreaName($uneAreaName) {$this->room_name = $uneAreaName;}
+    public function setAreaName($uneAreaName) {$this->area_name = $uneAreaName;}
     
     // ------------------------------------------------------------------------------------------------------
     // -------------------------------------- Méthodes d'instances ------------------------------------------
@@ -52,7 +52,7 @@ class Salle
         $msg .= "id : ".$this->getId()."<br>";
         $msg .= "room_name : ".$this->getRoom_name()."<br>";
         $msg .= "capacity : ".$this->getCapacity()."<br>";
-        $msg .= "area_name : ".$this->getArea_name()."<br>";
+        $msg .= "area_name : ".$this->getAreaName()."<br>";
         return $msg;
     }
 }

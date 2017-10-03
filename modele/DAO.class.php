@@ -383,7 +383,7 @@ class DAO
 	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
 	    
 	    $req = $this->cnx->prepare($txt_req);
-	    $req->bindValue("nomSalle")
+	    $req->bindValue("nomSalle");
 	}
 	
 	public function getUtilisateur($nomUser)

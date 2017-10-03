@@ -317,6 +317,11 @@ class DAO
 	    //Test
 	}
 	
+	public function aPasseDesReservations($nom)
+	{
+	    
+	}
+	
 	
 } // fin de la classe DAO
 

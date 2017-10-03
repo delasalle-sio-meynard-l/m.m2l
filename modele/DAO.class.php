@@ -513,7 +513,7 @@ class DAO
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    
-	    $req->bindValue("id", $idReservation, PDO::PARAM_STR);
+	    $req->bindValue("id", $digicodeSaisi, PDO::PARAM_STR);
 	    
 	    $req->execute();
 	    
@@ -528,6 +528,66 @@ class DAO
 	            return true;
 	}
 	
+	public function getReservation($idReservation)
+	{
+	    $txt_req = "select * ";
+	    $txt_req.= "from mrbs_entry ";
+	    $txt_req.= "where id = :idRes;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("idRes", $idReservation, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    
+	    
+	    $ligne = $req->fetch(PDO::FETCH_OBJ);
+	    if ($ligne)
+	    {
+	        while ($ligne)
+	        {
+	            //Trouver la room name
+	            $txt_request_roomname = "select room_name ";
+	            $txt_request_roomname.= "from mrbs_room ";
+	            $txt_request_roomname.= "where id = :idRoom;";
+	                
+	            $request = $this->cnx->prepare($txt_request_roomname);
+	            
+	            $request->bindValue("idRoom", $ligne->room_id, PDO::PARAM_STR);
+	            
+	            $request->execute();
+	            
+	            $unRoomName = $request->fetchColumn(0);
+	            // libère les ressources du jeu de données
+	            $request->closeCursor();
+	            //
+	            
+	            //Trouver le digicode de la réservation
+	            $txt_request_digicode = "select digicode ";
+	            $txt_request_digicode.= "from digicode ";
+	            $txt_request_digicode.= "where id = :idDigicode";
+	            
+	            $request_digicode = $this->cnx->prepare($txt_request_digicode);
+	            
+	            $request_digicode->bindValue("idDigicode", $idReservation, PDO::PARAM_STR);
+	            
+	            $request_digicode->execute();
+	            
+	            $unDigicode = $request_digicode->fetchColumn(0);
+	            // libère les ressources du jeu de données
+	            $request_digicode->closeCursor();
+	            //
+	            
+	            $uneReservation = new Reservation($ligne->id, $ligne->timestamp, $ligne->start_time, $ligne->end_time, $unRoomName, $ligne->statut, $unDigicode);
+	            $ligne = $req->fetch(PDO::FETCH_OBJ);
+	        }
+	        return $uneReservation;
+	    }
+	    else {return null;}
+	    
+	    
+	}
 } // fin de la classe DAO
 
 // ATTENTION : on ne met pas de balise de fin de script pour ne pas prendre le risque

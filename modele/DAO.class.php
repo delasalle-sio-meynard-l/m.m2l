@@ -392,11 +392,23 @@ class DAO
 	{
 	    $txt_req = "select * ";
 	    $txt_req.= "from mrbs_users ";
-	    $txt_req.= "";
+	    $txt_req.= "where name = :nom;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nom", $nomUser, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $ligne = $req->fetch(PDO::FETCH_OBJ);
+	    while ($ligne)
+	    {
+	        $unUtilisateur = new Utilisateur($ligne->id, $ligne->level, $ligne->name, $ligne->password, $ligne->email);
+	        $ligne = $req->fetch(PDO::FETCH_OBJ);
+	    }
 	    
 	    
 	    
-	   //$unUtilisateur = new Utilisateur($unId, $unLevel, $unName, $unPassword, $unEmail);
 	}
 	
 } // fin de la classe DAO

@@ -314,7 +314,7 @@ class DAO
 	
 	public function getLesSalles()
 	{
-	    //Test
+	   
 	}
 	
 	public function aPasseDesReservations($nom)
@@ -386,7 +386,7 @@ class DAO
 	public function getUtilisateur($nomUser)
 	{
 	    $txt_req = "select * ";
-	    $txt_req.= "from mrbs_users";
+	    $txt_req.= "from mrbs_users ";
 	    
 	    
 	    

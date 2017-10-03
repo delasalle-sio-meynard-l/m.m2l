@@ -306,7 +306,7 @@ class DAO
 			return "1";
 	}
 	
-	public function annulerReservation()
+	public function annulerReservation($idReservation)
 	{
 	    //oh lala, il fait très beau aujourd'hui je trouve
 
@@ -314,7 +314,8 @@ class DAO
 	
 	public function getLesSalles()
 	{
-	   
+	    $txt_req = "SELECT COUNT(*), room_name"; // casse les couilles loic
+	    $txt_req = $txt_req . " FROM mrbs_room";
 	}
 	
 	public function aPasseDesReservations($nom)
@@ -381,7 +382,9 @@ class DAO
 
 	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
 	    
-	}
+	    $req = $this->cnx->prepare($txt_req);
+	    $req->bindValue("nomSalle");	
+}
 	
 	public function getUtilisateur($nomUser)
 	{

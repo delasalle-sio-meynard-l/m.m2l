@@ -340,6 +340,58 @@ class DAO
 	            return true;
 	}
 	
+	public function modifierMdpUser($nom, $nouveauMdp)
+	{
+	    $txt_req = "update mrbs_users ";
+	    $txt_req.= "set password = :nouvMdp ";
+	    $txt_req.= "where name = :nom;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nouvMdp", md5($nouveauMdp), PDO::PARAM_STR);
+	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $unUtilisateur = getUtilisateur($nom);
+	    
+	    if ($unUtilisateur->getPassword() == md5($nouveauMdp))
+    	    return true;
+	    else 
+	        return false;
+	}
+	
+	public function envoyerMdp($nom, $nouveauMdp)
+	{
+	    $txt_req = "select email ";
+	    $txt_req.= "from mrbs_users ";
+	    $txt_req.= "where name = :nom ;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $adrEmail = $req->fetchColumn(0);
+	    
+	    $req->closeCursor();
+	    
+	    $message = "Bonjour, suite à votre demande votre mot de passe à changé. Voici votre nouveau mot de passe mrbs : ".$nouveauMdp;
+
+	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
+	    
+	}
+	
+	public function getUtilisateur($nomUser)
+	{
+	    $txt_req = "select * ";
+	    $txt_req.= "from mrbs_users";
+	    
+	    
+	    
+	   //$unUtilisateur = new Utilisateur($unId, $unLevel, $unName, $unPassword, $unEmail);
+	}
 	
 } // fin de la classe DAO
 

@@ -99,8 +99,8 @@ else
 // test de la méthode envoyerMdp ------------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de envoyerMdp : </h3>";
-$dao->modifierMdpUser("jim", "passe");
-$ok = $dao->envoyerMdp("jim", "passe");
+$dao->modifierMdpUser("guesdonm", "passe");
+$ok = $dao->envoyerMdp("guesdonm", "passe");
 if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
@@ -213,7 +213,7 @@ else
 */
 
 
-/*
+
 // test de la méthode getUtilisateur --------------------------------------------------------------
 // modifié par Jim le 30/9/2015
 echo "<h3>Test de getUtilisateur : </h3>";
@@ -227,10 +227,10 @@ if ($unUtilisateur)
 	echo "<p>L'utilisateur admon existe : <br>" . $unUtilisateur->toString() . "</p>";
 else
 	echo "<p>L'utilisateur admon n'existe pas !</p>";
-*/
 
 
-/*
+
+
 // test de la méthode modifierMdpUser -------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de modifierMdpUser : </h3>";
@@ -249,7 +249,9 @@ if ($unUtilisateur) {
 }
 else
 	echo "<p>L'utilisateur admin n'existe pas !</p>";
-*/
+
+echo md5("passe");
+
 
 
 /*

@@ -311,9 +311,7 @@ class DAO
 	      $txt_req = "DELETE FROM mrbs_entry WHERE id = :idReservation";
 	      $req = $this->cnx->prepare($txt_req);
 	      $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
-	      $reponse = $req=execute();
-	      return $reponse;
-
+	      $req->execute();
 	}
 		
 	public function getLesSalles()

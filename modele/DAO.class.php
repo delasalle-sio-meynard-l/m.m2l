@@ -314,7 +314,7 @@ class DAO
 	
 	public function getLesSalles()
 	{
-	    $txt_req = "SELECT COUNT(*), room_name";
+	    $txt_req = "SELECT COUNT(*), room_name"; // casse les couilles loic
 	    $txt_req = $txt_req . " FROM mrbs_room";
 	}
 	

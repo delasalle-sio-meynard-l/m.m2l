@@ -477,12 +477,12 @@ class DAO
 	public function testerDigicodeBatiment($digicodeSaisi)
 	{
 	    $txt_req = "select count(*) ";
-	    $txt_req = $txt_req . "from mrbs_entry ";
-	    $txt_req = $txt_req . "where id = :id;";
+	    $txt_req = $txt_req . "from mrbs_entry_digicode ";
+	    $txt_req = $txt_req . "where digicode = :dig;";
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    
-	    $req->bindValue("id", $idReservation, PDO::PARAM_STR);
+	    $req->bindValue("dig", $digicodeSaisi, PDO::PARAM_STR);
 	    
 	    $req->execute();
 	    
@@ -492,9 +492,9 @@ class DAO
 	    
 	    // fourniture de la réponse
 	    if ($nbReponses == 0)
-	        return false;
+	        return '0';
 	        else
-	            return true;
+	            return '1';
 	}
 	
 } // fin de la classe DAO

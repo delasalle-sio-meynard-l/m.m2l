@@ -387,6 +387,7 @@ class DAO
 	{
 	    $txt_req = "select * ";
 	    $txt_req.= "from mrbs_users ";
+	    $txt_req.= "";
 	    
 	    
 	    

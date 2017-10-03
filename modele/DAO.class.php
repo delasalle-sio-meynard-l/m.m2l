@@ -384,7 +384,9 @@ class DAO
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    $req->bindValue("nomSalle");	
-}
+
+	    $req->bindValue("nomSalle");
+	}
 	
 	public function getUtilisateur($nomUser)
 	{

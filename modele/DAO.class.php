@@ -319,8 +319,8 @@ class DAO
 	
 	public function aPasseDesReservations($nom)
 	{
-	    $txt_req = "select count(*)";
-	    $txt_req = $txt_req . "from mrbs_entry";
+	    $txt_req = "select count(*) ";
+	    $txt_req = $txt_req . "from mrbs_entry ";
 	    $txt_req = $txt_req . "where create_by = :nom;";
 	    
 	    $req = $this->cnx->prepare($txt_req);
@@ -335,9 +335,9 @@ class DAO
 	    
 	    // fourniture de la réponse
 	    if ($nbReponses == 0)
-	        return "false";
+	        return false;
 	        else
-	            return "true";
+	            return true;
 	}
 	
 	

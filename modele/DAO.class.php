@@ -322,6 +322,9 @@ class DAO
 	    $txt_req = $txt_req . " FROM mrbs_room";
 	}
 	
+	
+	//---------------- Triangle des bermudes ---------------// 
+	
 	public function aPasseDesReservations($nom)
 	{
 	    $txt_req = "select count(*) ";

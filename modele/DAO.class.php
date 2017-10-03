@@ -311,6 +311,10 @@ class DAO
 	    
 	}
 	
+	public function getLesSalles()
+	{
+	    
+	}
 	
 	
 } // fin de la classe DAO

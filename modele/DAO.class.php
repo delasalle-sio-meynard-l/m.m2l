@@ -371,6 +371,7 @@ class DAO
 	
 	public function envoyerMdp($nom, $nouveauMdp)
 	{
+	    $out = new Outils();
 	    $txt_req = "select email ";
 	    $txt_req.= "from mrbs_users ";
 	    $txt_req.= "where name = :nom ;";
@@ -387,7 +388,14 @@ class DAO
 	    
 	    $message = "Bonjour, suite à votre demande votre mot de passe à changé. Voici votre nouveau mot de passe mrbs : ".$nouveauMdp;
 
-	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
+	    $out->envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
+	       
+	    if ($out)
+	        return $out;
+	    else 
+	        return null;
+	    
+	
 	}
 	
 	public function getUtilisateur($nomUser)

@@ -425,6 +425,29 @@ class DAO
 	    
 	}
 	
+	public function existeReservation($idReservation)
+	{
+	    $txt_req = "select count(*) ";
+	    $txt_req = $txt_req . "from mrbs_entry ";
+	    $txt_req = $txt_req . "where id = :id;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("id", $idReservation, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $nbReponses = $req->fetchColumn(0);
+	    // libère les ressources du jeu de données
+	    $req->closeCursor();
+	    
+	    // fourniture de la réponse
+	    if ($nbReponses == 0)
+	        return false;
+	        else
+	            return true;
+	}
+	
 } // fin de la classe DAO
 
 // ATTENTION : on ne met pas de balise de fin de script pour ne pas prendre le risque

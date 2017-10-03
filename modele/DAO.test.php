@@ -95,7 +95,7 @@ else
 */
 
 
-
+/*
 // test de la méthode envoyerMdp ------------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de envoyerMdp : </h3>";
@@ -105,7 +105,7 @@ if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
-
+*/
 
 
 /*
@@ -119,7 +119,7 @@ echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>"
 */
 
 
-/*
+
 // test de la méthode existeReservation -----------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de existeReservation : </h3>";
@@ -127,7 +127,7 @@ if ($dao->existeReservation("11")) $existe = "oui"; else $existe = "non";
 echo "<p>Existence de la réservation 11 : <b>" . $existe . "</b><br>";
 if ($dao->existeReservation("12")) $existe = "oui"; else $existe = "non";
 echo "Existence de la réservation 12 : <b>" . $existe . "</b></p>";
-*/
+
 
 
 // test de la méthode existeUtilisateur -----------------------------------------------------------

@@ -311,6 +311,10 @@ class DAO
 	    //oh lala, il fait très beau aujourd'hui je trouve
 	}
 	
+	public function getLesSalles()
+	{
+	    
+	}
 	
 	
 } // fin de la classe DAO

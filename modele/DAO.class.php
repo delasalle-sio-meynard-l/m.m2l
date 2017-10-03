@@ -381,7 +381,6 @@ class DAO
 	    $message = "Bonjour, suite à votre demande votre mot de passe à changé. Voici votre nouveau mot de passe mrbs : ".$nouveauMdp;
 
 	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
->>>>>>> branch 'master' of https://github.com/delasalle-sio-meynard-l/m.m2l.git
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    $req->bindValue("nomSalle")

@@ -380,27 +380,6 @@ class DAO
 	            return true;
 	}
 	
-	public function confirmerReservation($id)
-	{
-	    $txt_req = "select status from mrbs_entry where id = :id";
-	    $req = $this->cnx->prepare($txt_req);
-	    $req->bindValue("id", $id, PDO::PARAM_INT);
-	    $statut = $req->execute();
-	    $statut = $req->fetchColumn(0);
-	    $rep = false;
-	    if ($statut == 4){
-	        
-	        $txt_req = "update mrbs_entry set status = 0 where id = :id";
-	        $req = $this->cnx->prepare($txt_req);
-	        
-	        $req->bindValue("id", $id, PDO::PARAM_INT);
-	        $rep = $req->execute();
-	        
-	    }
-	    return $rep;
-	}
-	
-	
 	//---------------- Triangle des Bermudes ---------------// 
 	
 	public function aPasseDesReservations($nom)
@@ -529,8 +508,8 @@ class DAO
 	public function testerDigicodeBatiment($digicodeSaisi)
 	{
 	    $txt_req = "select count(*) ";
-	    $txt_req = $txt_req . "from mrbs_entry ";
-	    $txt_req = $txt_req . "where id = :id;";
+	    $txt_req = $txt_req . "from mrbs_entry_digicode ";
+	    $txt_req = $txt_req . "where digicode = :id;";
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    
@@ -544,9 +523,9 @@ class DAO
 	    
 	    // fourniture de la réponse
 	    if ($nbReponses == 0)
-	        return false;
+	        return '0';
 	        else
-	            return true;
+	            return '1';
 	}
 	
 	public function getReservation($idReservation)

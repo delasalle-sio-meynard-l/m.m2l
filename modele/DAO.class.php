@@ -348,6 +348,37 @@ class DAO
 	    return $lesSalles;
 	}
 	
+	public function supprimerUtilisateur($nom) 
+	{	
+	    $rep = $this->getUtilisateur($nom);
+	    if ($rep){
+	        $txt_req = "DELETE FROM mrbs_users WHERE name = :nom";
+	        $req = $this->cnx->prepare($txt_req);
+	        $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	        $rep = $req->execute();
+	        
+	    }
+	    return $rep;
+	}
+	
+	public function estLeCreateur($nomUser,$idReservation)
+	{	
+	    $txt_req = "Select count(*) from mrbs_entry where create_by = :nomUser AND id = :idReservation";
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    $nbRep = $req->fetchColumn(0);
+	    $req->closeCursor();
+	    
+	    // fourniture de la réponse
+	    if ($nbRep == 0)
+	        return false;
+	        else
+	            return true;
+	}
 	
 	//---------------- Triangle des Bermudes ---------------// 
 	
@@ -477,12 +508,12 @@ class DAO
 	public function testerDigicodeBatiment($digicodeSaisi)
 	{
 	    $txt_req = "select count(*) ";
-	    $txt_req = $txt_req . "from mrbs_entry_digicode ";
-	    $txt_req = $txt_req . "where digicode = :dig;";
+	    $txt_req = $txt_req . "from mrbs_entry ";
+	    $txt_req = $txt_req . "where id = :id;";
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    
-	    $req->bindValue("dig", $digicodeSaisi, PDO::PARAM_STR);
+	    $req->bindValue("id", $idReservation, PDO::PARAM_STR);
 	    
 	    $req->execute();
 	    
@@ -492,9 +523,9 @@ class DAO
 	    
 	    // fourniture de la réponse
 	    if ($nbReponses == 0)
-	        return '0';
+	        return false;
 	        else
-	            return '1';
+	            return true;
 	}
 	
 } // fin de la classe DAO

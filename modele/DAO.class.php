@@ -308,18 +308,94 @@ class DAO
 	
 	public function annulerReservation($idReservation)
 	{
-	    
+	    //oh lala, il fait très beau aujourd'hui je trouve
+
 	}
 	
 	public function getLesSalles()
 	{
 	    $txt_req = "SELECT COUNT(*), room_name";
 	    $txt_req = $txt_req . " FROM mrbs_room";
+	}
+	
+	public function aPasseDesReservations($nom)
+	{
+	    $txt_req = "select count(*) ";
+	    $txt_req = $txt_req . "from mrbs_entry ";
+	    $txt_req = $txt_req . "where create_by = :nom;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $nbReponses = $req->fetchColumn(0);
+	    // libère les ressources du jeu de données
+	    $req->closeCursor();
+	    
+	    // fourniture de la réponse
+	    if ($nbReponses == 0)
+	        return false;
+	        else
+	            return true;
+	}
+	
+	public function modifierMdpUser($nom, $nouveauMdp)
+	{
+	    $txt_req = "update mrbs_users ";
+	    $txt_req.= "set password = :nouvMdp ";
+	    $txt_req.= "where name = :nom;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nouvMdp", md5($nouveauMdp), PDO::PARAM_STR);
+	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $unUtilisateur = getUtilisateur($nom);
+	    
+	    if ($unUtilisateur->getPassword() == md5($nouveauMdp))
+    	    return true;
+	    else 
+	        return false;
+	}
+	
+	public function envoyerMdp($nom, $nouveauMdp)
+	{
+	    $txt_req = "select email ";
+	    $txt_req.= "from mrbs_users ";
+	    $txt_req.= "where name = :nom ;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $adrEmail = $req->fetchColumn(0);
+	    
+	    $req->closeCursor();
+	    
+	    $message = "Bonjour, suite à votre demande votre mot de passe à changé. Voici votre nouveau mot de passe mrbs : ".$nouveauMdp;
+
+	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
+>>>>>>> branch 'master' of https://github.com/delasalle-sio-meynard-l/m.m2l.git
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    $req->bindValue("nomSalle")
 	}
 	
+	public function getUtilisateur($nomUser)
+	{
+	    $txt_req = "select * ";
+	    $txt_req.= "from mrbs_users";
+	    
+	    
+	    
+	   //$unUtilisateur = new Utilisateur($unId, $unLevel, $unName, $unPassword, $unEmail);
+	}
 	
 } // fin de la classe DAO
 

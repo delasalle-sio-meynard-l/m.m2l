@@ -306,21 +306,18 @@ class DAO
 			return "1";
 	}
 	
-	public function annulerReservation()
+	public function annulerReservation($idReservation)
 	{
-	    //oh lala, il fait très beau aujourd'hui je trouve
-	    
-	    
-	    
-	    
-	    
-	    
 	    
 	}
 	
 	public function getLesSalles()
 	{
+	    $txt_req = "SELECT COUNT(*), room_name";
+	    $txt_req = $txt_req . " FROM mrbs_room";
 	    
+	    $req = $this->cnx->prepare($txt_req);
+	    $req->bindValue("nomSalle")
 	}
 	
 	

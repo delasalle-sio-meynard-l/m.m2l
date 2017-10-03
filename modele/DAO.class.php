@@ -358,7 +358,7 @@ class DAO
 	    
 	    $req->execute();
 	    
-	    $unUtilisateur = getUtilisateur($nom);
+	    $unUtilisateur = DAO::getUtilisateur($nom);
 	    
 	    if ($unUtilisateur->getPassword() == md5($nouveauMdp))
     	    return true;
@@ -385,11 +385,6 @@ class DAO
 	    $message = "Bonjour, suite à votre demande votre mot de passe à changé. Voici votre nouveau mot de passe mrbs : ".$nouveauMdp;
 
 	    Outils::envoyerMail($adrEmail, "MRBS / Changement mot de passe", $message, "delasalle.sio.crib@gmail.Com");
-	    
-	    $req = $this->cnx->prepare($txt_req);
-	    $req->bindValue("nomSalle");	
-
-	    $req->bindValue("nomSalle");
 	}
 	
 	public function getUtilisateur($nomUser)
@@ -405,13 +400,17 @@ class DAO
 	    $req->execute();
 	    
 	    $ligne = $req->fetch(PDO::FETCH_OBJ);
-	    while ($ligne)
+	    if ($ligne)
 	    {
-	        $unUtilisateur = new Utilisateur($ligne->id, $ligne->level, $ligne->name, $ligne->password, $ligne->email);
-	        $ligne = $req->fetch(PDO::FETCH_OBJ);
+	        while ($ligne)
+	        {
+	            $unUtilisateur = new Utilisateur($ligne->id, $ligne->level, $ligne->name, $ligne->password, $ligne->email);
+	            $ligne = $req->fetch(PDO::FETCH_OBJ);
+	        }
+	        return $unUtilisateur;
 	    }
-	    
-	    
+	    else {return null;}
+	   
 	    
 	}
 	

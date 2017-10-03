@@ -309,6 +309,13 @@ class DAO
 	public function annulerReservation()
 	{
 	    //oh lala, il fait très beau aujourd'hui je trouve
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 	
 	public function getLesSalles()

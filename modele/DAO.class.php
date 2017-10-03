@@ -319,7 +319,25 @@ class DAO
 	
 	public function aPasseDesReservations($nom)
 	{
+	    $txt_req = "select count(*)";
+	    $txt_req = $txt_req . "from mrbs_entry";
+	    $txt_req = $txt_req . "where create_by = :nom;";
 	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $nbReponses = $req->fetchColumn(0);
+	    // libère les ressources du jeu de données
+	    $req->closeCursor();
+	    
+	    // fourniture de la réponse
+	    if ($nbReponses == 0)
+	        return "false";
+	        else
+	            return "true";
 	}
 	
 	

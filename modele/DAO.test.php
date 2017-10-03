@@ -39,22 +39,22 @@ else
 */
 
 
-/*
+
 // test de la méthode aPasseDesReservations -------------------------------------------------------
 // pour ce test, choisir un utilisateur avec des réservations et un autre sans réservation
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de aPasseDesReservations : </h3>";
-$ok = $dao->aPasseDesReservations("zenelsy");
+$ok = $dao->aPasseDesReservations("giboired");
 if ($ok)
-	echo "<p>zenelsy a bien passé des réservations !<br>";
+	echo "<p>giboired a bien passé des réservations !<br>";
 else
-	echo "<p>zenelsy n'a pas passé de réservations !<br>";
+	echo "<p>giboired n'a pas passé de réservations !<br>";
 $ok = $dao->aPasseDesReservations("jim");
 if ($ok)
 	echo "jim a bien passé des réservations !</p>";
 else
 	echo "jim n'a pas passé de réservations !</p>";
-*/
+
 
 
 /*

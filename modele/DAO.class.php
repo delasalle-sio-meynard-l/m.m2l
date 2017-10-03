@@ -565,7 +565,7 @@ class DAO
 	            
 	            //Trouver le digicode de la réservation
 	            $txt_request_digicode = "select digicode ";
-	            $txt_request_digicode.= "from digicode ";
+	            $txt_request_digicode.= "from mrbs_entry_digicode ";
 	            $txt_request_digicode.= "where id = :idDigicode";
 	            
 	            $request_digicode = $this->cnx->prepare($txt_request_digicode);
@@ -578,8 +578,7 @@ class DAO
 	            // libère les ressources du jeu de données
 	            $request_digicode->closeCursor();
 	            //
-	            
-	            $uneReservation = new Reservation($ligne->id, $ligne->timestamp, $ligne->start_time, $ligne->end_time, $unRoomName, $ligne->statut, $unDigicode);
+	            $uneReservation = new Reservation($ligne->id, $ligne->timestamp, $ligne->start_time, $ligne->end_time, $unRoomName, $ligne->status, $unDigicode);
 	            $ligne = $req->fetch(PDO::FETCH_OBJ);
 	        }
 	        return $uneReservation;

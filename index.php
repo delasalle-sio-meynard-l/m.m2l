@@ -75,7 +75,7 @@ switch($action){
 	}
 	case 'ConfirmerReservation': {
 		//include_once ('controleurs/CtrlConfirmerReservation.php'); break;
-		include_once ('controleurs/CtrlMenu.php'); break;	// ligne provisoire
+		include_once ('controleurs/CtrlConfirmerReservation.php'); break;	// ligne provisoire
 	}
 	case 'AnnulerReservation': {
 		//include_once ('controleurs/CtrlAnnulerReservation.php'); break;

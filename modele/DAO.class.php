@@ -306,6 +306,14 @@ class DAO
 			return "1";
 	}
 	
+	public function confirmerReservation($idReservation)
+	{
+	    $txt_req = "UPDATE mrbs_entry SET status=0 WHERE id=:idReservation";
+	    $req = $this->cnx->prepare($txt_req);
+	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+	    $req->execute();
+	}
+	
 	public function annulerReservation($idReservation)
 	{
 	      $txt_req = "DELETE FROM mrbs_entry WHERE id = :idReservation";
@@ -537,8 +545,6 @@ class DAO
 	    $req->bindValue("idRes", $idReservation, PDO::PARAM_STR);
 	    
 	    $req->execute();
-	    
-	    
 	    
 	    $ligne = $req->fetch(PDO::FETCH_OBJ);
 	    if ($ligne)

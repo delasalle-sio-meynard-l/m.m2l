@@ -11,6 +11,28 @@
 
 <!doctype html>
 <html>
+	<script>
+		// version jQuery activée
+			
+		// associe une fonction à l'événement pageinit
+		$(document).bind('pageinit', function() {
+			// l'événement "click" de la case à cocher "caseAfficherMdp" est associé à la fonction "afficherMdp"
+			$('#caseAfficherMdp').click( afficherMdp );
+				
+			// selon l'état de la case, le type de la zone de saisie est "text" ou "password"
+			afficherMdp();
+				
+			// affichage du dernier mot de passe saisi (désactivé ici, car effectué dans le code HTML du formulaire)
+			// $('#txtMotDePasse').attr('value','<?php echo $mdp; ?>');
+				
+			<?php if ($typeMessage != '') { ?>
+				// affiche la boîte de dialogue 'affichage_message'
+				$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
+			<?php } ?>
+		} );
+
+			
+	</script>
 	<head>
 		<?php include_once ('vues/head.php'); ?>
 	</head>
@@ -42,6 +64,6 @@
 				<h4>Suivi des réservations de salles<br>Maison des ligues de Lorraine (M2L)</h4>
 			</div>
 		</div>
-		
+		<?php include_once ('vues/dialog_message.php'); ?>
 	</body>
 </html>

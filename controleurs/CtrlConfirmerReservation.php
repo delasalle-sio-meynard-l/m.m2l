@@ -11,13 +11,12 @@ else {
     // récupération des données postées
     if ( empty ($_POST ["txtNumReservation"]) == true)  $NumReservation = "";  else   $NumReservation = $_POST ["txtNumReservation"];
     
-    if ($NumReservation == '') {
+    if ($NumReservation == 'A') {
         // si les données sont incomplètes, réaffichage de la vue avec un message explicatif
         $message = 'Données incomplètes ou incorrectes !';
         $typeMessage = 'avertissement';
         $themeFooter = $themeProbleme;
-        $niveauUtilisateur = '';
-        include_once ('vues/VueConnecter.php');
+        include_once ('vues/VueConfirmerReservation.php');
     }
     else {
         // connexion du serveur web à la base MySQL
@@ -32,11 +31,19 @@ else {
         }
         else 
         {
-            $laReservation= $dao->getReservation($NumReservation);
             //La reservation existe
-            if($laReservation)
+            $laReservation= $dao->getReservation($NumReservation);
+            
+            //Verifie si utilisateur est l'auteur de cette reservation  
+            if($dao->estLeCreateur($nom, $NumReservation) == true)
             {
-                //Verifie si utilisateur est l'auteur de cette reservation    
+                //C'est l'auteur  
+                
+            }
+            else 
+            {
+                //Ce n'est pas l'auteur de  cette reservation
+                
             }
         }
     }

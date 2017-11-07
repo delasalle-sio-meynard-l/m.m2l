@@ -16,14 +16,6 @@
 			
 		// associe une fonction à l'événement pageinit
 		$(document).bind('pageinit', function() {
-			// l'événement "click" de la case à cocher "caseAfficherMdp" est associé à la fonction "afficherMdp"
-			$('#caseAfficherMdp').click( afficherMdp );
-				
-			// selon l'état de la case, le type de la zone de saisie est "text" ou "password"
-			afficherMdp();
-				
-			// affichage du dernier mot de passe saisi (désactivé ici, car effectué dans le code HTML du formulaire)
-			// $('#txtMotDePasse').attr('value','<?php echo $mdp; ?>');
 				
 			<?php if ($typeMessage != '') { ?>
 				// affiche la boîte de dialogue 'affichage_message'
@@ -36,7 +28,6 @@
 	<head>
 		<?php include_once ('vues/head.php'); ?>
 	</head>
-	
 	<body>
 		<div data-role="page">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
@@ -44,11 +35,12 @@
 				<a href="index.php?action=Menu" data-transition="<?php echo $transition; ?>">Retour menu</a>
 			</div>
 			<div data-role="content">
+				<h4><?php echo $typeMessage;?></h4>
 				<h4 style="text-align: center; margin-top: 0px; margin-bottom: 0px;">Confirmer mes réservations</h4>
 				
 				<form name="form1" id="form1" action="index.php?action=ConfirmerReservation" data-ajax="false" method="post" data-transition="<?php echo $transition; ?>">
 						<div data-role="fieldcontain" class="ui-hide-label">
-							<label for="txtNumReservation">Utilisateur :</label>
+							<label for="txtNumReservation">Numéro de réservation :</label>
 							<input type="text" name="txtNumReservation" id="txtNumReservation" data-mini="true" placeholder="Entrez le numéro de réservation" required value="<?php echo $NumReservation; ?>" >
 		
 						</div>														
@@ -64,6 +56,7 @@
 				<h4>Suivi des réservations de salles<br>Maison des ligues de Lorraine (M2L)</h4>
 			</div>
 		</div>
+
 		<?php include_once ('vues/dialog_message.php'); ?>
 	</body>
 </html>

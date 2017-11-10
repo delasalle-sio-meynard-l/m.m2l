@@ -435,19 +435,7 @@ class DAO
 	public function envoyerMdp($nom, $nouveauMdp)
 	{
 	    $out = new Outils();
-	    $txt_req = "select email ";
-	    $txt_req.= "from mrbs_users ";
-	    $txt_req.= "where name = :nom ;";
-	    
-	    $req = $this->cnx->prepare($txt_req);
-	    
-	    $req->bindValue("nom", $nom, PDO::PARAM_STR);
-	    
-	    $req->execute();
-	    
-	    $adrEmail = $req->fetchColumn(0);
-	    
-	    $req->closeCursor();
+	    $adrEmail = DAO::getEmailUtilisateur($nom);
 	    
 	    $message = "Bonjour, suite à votre demande votre mot de passe à changé. Voici votre nouveau mot de passe mrbs : ".$nouveauMdp;
 
@@ -459,6 +447,24 @@ class DAO
 	        return null;
 	    
 	
+	}
+	
+	public function getEmailUtilisateur($nomUser)
+	{
+	    $txt_req = "select email ";
+	    $txt_req.= "from mrbs_users ";
+	    $txt_req.= "where name = :nom ;";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    
+	    $req->bindValue("nom", $nomUser, PDO::PARAM_STR);
+	    
+	    $req->execute();
+	    
+	    $adrEmail = $req->fetchColumn(0);
+	    
+	    $req->closeCursor();
+	    return $adrEmail;
 	}
 	
 	public function getUtilisateur($nomUser)

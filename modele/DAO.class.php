@@ -330,7 +330,7 @@ class DAO
 	public function getLesSalles()
 	{
 	    $txt_req = "SELECT mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name";
-	    $txt_req = $txt_req . "FROM mrbs_room, mrbs_area, mrbs_entry";
+	    $txt_req = $txt_req . "FROM mrbs_room, mrbs_area";
 	    $txt_req = $txt_req . "WHERE mrbs_room.area_id = mrbs_area.id;";
 	    
 	    $req = $this->cnx->prepare($txt_req);

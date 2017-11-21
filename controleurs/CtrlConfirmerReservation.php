@@ -1,4 +1,5 @@
 <?php
+//STBW
 if ( ! isset ($_POST ["btnConfirmer"]) == true) {
     // si la confirmation n'a pas été demandée, c'est le premier appel du formulaire : affichage de la vue sans message d'erreur
     $NumReservation = "";

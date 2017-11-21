@@ -17,7 +17,7 @@
 						<input type="text" name="txtDemanderMdp" id="txtDemanderMdp" data-mii="true" placeholder = "Entrez votre nom" value ="<?php echo $nom; ?>">
 					</div>
 					<div data-role="fieldcontain">
-						<input type="submit" name="btnDemanderMdp" id="btnDemanderMdp" value="M'envoyer un nouveau mot de passe">
+						<input type="submit" name="btnDemanderMdp" id="btnDemanderMdp" data-ajax="false" data-mini="true" value="M'envoyer un nouveau mot de passe">
 					</div>
 				</form>
 			</div>

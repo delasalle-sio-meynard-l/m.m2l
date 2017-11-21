@@ -38,7 +38,7 @@ else
 	echo "<p>La réservation 5 n'existe pas !</p>";
 */
 
-
+/*
 // test de la méthode aPasseDesReservations -------------------------------------------------------
 // pour ce test, choisir un utilisateur avec des réservations et un autre sans réservation
 // modifié par Jim le 28/9/2015
@@ -168,8 +168,8 @@ foreach ($lesReservations as $uneReservation)
 }
 
 
+*/
 
-/*
 // test de la méthode getLesSalles ----------------------------------------------------------------
 // modifié par Jim le 26/5/2016
 echo "<h3>Test de getLesSalles : </h3>";
@@ -181,7 +181,7 @@ foreach ($lesSalles as $uneSalle)
 {	echo ($uneSalle->getRoom_name());
 	echo ('<br>');
 }
-*/
+/*
 
 
 // test de la méthode getNiveauUtilisateur --------------------------------------------------------
@@ -279,7 +279,7 @@ echo "<h3>Test de testerDigicodeSalle : </h3>";
 $reponse = $dao->testerDigicodeSalle("15", "410EE4");
 echo "<p>L'appel de testerDigicodeSalle('15', '410EE4') donne : <b>" . $reponse . "</b><br>";
 
-
+*/
 // ferme la connexion à MySQL :
 unset($dao);
 ?>

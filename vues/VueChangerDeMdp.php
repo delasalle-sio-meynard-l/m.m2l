@@ -35,11 +35,26 @@
 					
 					<div data-role="fieldcontain">
 						<label for="txtConfirmation">Confirmation nouveau mot de passe:</label>
+						<input type="<?php if($afficherMdp =='off') echo 'password'; else echo 'text';?>" name="txtConfirmation" id="txtConfirmation" placeholder="Confirmation de mon nouveau mot de passe" required pattern = "^.{8,}$" value="<?php echo $confirmationMdp; ?>">
+					</div>
+					
+					<div data-role="fieldcontain" data-type="horizontal" class="ui-hide-label">
+						<label for="caseAfficherMdp">Afficher le mot de passe en clair</label>
+						<input type="checkbox" name="caseAfficherMdp" id="caseAfficherMdp" data-mini="true" <?php if($afficherMdp == 'on') echo 'checked'; ?> >
+					</div>
+					
+					<div data-role="fieldcontain">
+						<input type="submit" name="btnChangerDeMdp" id="btnChangerDeMdp" value="Envoyer les données">
 					</div>
 				</form>
-				
-				
+			</div>
+			<div>
+				<div data-role="footer" data-position="fixed" data-theme="<?php echo $themeNormal;?>">
+					<h4>Suivi des réservations de salles<br>Maison des ligues de Lorraine (M2L)</h4>
+				</div>
 			</div>
 		</div>
+		
+		<?php include_once ('vues/dialog_message.php'); ?>
 	</body>
 </html>

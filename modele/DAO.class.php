@@ -316,7 +316,12 @@ class DAO
 	
 	public function annulerReservation($idReservation)
 	{
-	      $txt_req = "DELETE FROM mrbs_entry WHERE id = :idReservation";
+// 	      $txt_req = "DELETE FROM mrbs_entry WHERE id = :idReservation";
+// 	      $req = $this->cnx->prepare($txt_req);
+// 	      $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+// 	      $req->execute();
+	      
+	      $txt_req = "UPDATE mrbs_entry SET status=4 WHERE id=:idReservation";
 	      $req = $this->cnx->prepare($txt_req);
 	      $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
 	      $req->execute();

@@ -331,9 +331,7 @@ class DAO
 	{
 	    $txt_req = "SELECT mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name";
 	    $txt_req = $txt_req . "FROM mrbs_room, mrbs_area, mrbs_entry";
-	    $txt_req = $txt_req . "WHERE mrbs_room.area_id = mrbs_area.id";
-	    $txt_req = $txt_req . "GROUP BY mrbs_room.room_name";
-	    $txt_req = $txt_req . "ORDER BY mrbs_area.area_name, mrbs_room.room_name;";
+	    $txt_req = $txt_req . "WHERE mrbs_area.id = mrbs_room.area_id;";
 	    
 	    $req = $this->cnx->query($txt_req);
 	    
@@ -341,8 +339,8 @@ class DAO
 	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
 	    
 	    $lesSalles = array();
-	    
-	    while ($uneLigne)
+	    $i = 0;
+	    while ($i<5)
 	    {
 	        $unId = utf8_encode($uneLigne->id);
 	        $unRoomName = utf8_encode($uneLigne->room_name);
@@ -351,12 +349,13 @@ class DAO
 	        
 	        $uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName);
 	        $lesSalles[] = $uneSalle;
+	        $i++;
 	        $uneLigne = $req->fetch(PDO::FETCH_OBJ);
 	        
 	    }
 	    
 	    $req->closeCursor();
-	    return $lesSalles;
+	    return $i;
 	}
 	
 	public function supprimerUtilisateur($nom) 

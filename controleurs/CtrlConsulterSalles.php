@@ -7,14 +7,21 @@ if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisa
     header ("Location: index.php?action=Deconnecter");
 }
 else {
-    echo "Test";
     
     // connexion du serveur web à la base MySQL
     include_once ('modele/DAO.class.php');
     $dao = new DAO();
     
     // récupération des salles à l'aide de la méthode getLesSalles de la classe DAO
-    $lesSalles = $dao->getLesSalles();
+    $i = $dao->getLesSalles();
+    echo $i;
+    
+    $lesSalles = array();
+    
+    $uneSalle = new Salle(1, "Full", 35, "Balek");
+    $uneSalle2 = new Salle(2, "Try", 20, "It");
+    $lesSalles[] = $uneSalle;
+    $lesSalles[] = $uneSalle2;
     
     // mémorisation du nombre de salles
     $NumSalle = sizeof($lesSalles);
@@ -28,7 +35,7 @@ else {
     }
     
     // affichage de la vue
-    include_once ('vues/VueConsulterSalles.php');
+    //include_once ('vues/VueConsulterSalles.php');
     
     unset($dao);		// fermeture de la connexion à MySQL
 }

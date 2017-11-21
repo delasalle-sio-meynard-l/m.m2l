@@ -22,9 +22,9 @@
 				foreach ($lesSalles as $uneSalle)
 				{ ?>
 					<li><a href="#">
-					<p><?php $NumSalle . ' places'?></p>
-					<h5>Salle : <?php echo $uneSalle->getRoom_name(); ?></h5>
-					<p>Domaine : <?php echo $uneSalle->getAreaName(); ?></p>
+						<p style="text-align: right;"><?php echo $uneSalle->getCapacity() . ' places'?></p>
+						<h5>Salle : <?php echo $uneSalle->getRoom_name(); ?></h5>
+						<p>Domaine : <?php echo $uneSalle->getAreaName(); ?></p>
 					</a></li>
 				<?php
 				} ?>

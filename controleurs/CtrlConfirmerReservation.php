@@ -90,7 +90,7 @@ else {
                 //On recupere l'adresse email
                 $adrEmail = $dao->getEmailUtilisateur($nom);
                 
-                $message = "Vous avez confirmé votre réservation";
+                $message = "Vous avez confirmé la réservation n°".$NumReservation.".";
                 
                 $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
                 

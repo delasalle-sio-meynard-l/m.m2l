@@ -17,18 +17,19 @@
 //
 
 if(!isset($_POST["btnDemanderMdp"]) == true) {
-    $nomUser = '';
+    $nomUtilisateur = '';
     $message = '';
     $typeMessage = '';
     $themeFooter = $themeNormal;
     include_once('vues/VueDemanderMdp.php');
 }
 else {
-    if (empty($_POST["txtDemanderMdp"]) == true) $nomUser = ""; else $nomUser = $_POST["txtDemanderMdp"];
-    if($nomUser == '') {
+    if (empty($_POST["txtDemanderMdp"]) == true) $nomUtilisateur = ""; else $nomUtilisateur = $_POST["txtDemanderMdp"];
+    if($nomUtilisateur == '') {
         $message = 'Données incomplètes ou incorrectes !';
         $typeMessage = 'avertissement';
         $themeFooter = $themeProbleme;
+        include_once('vues/VueDemanderMdp.php');
     }
     
     else {
@@ -36,7 +37,7 @@ else {
         $dao = new DAO();
         $out = new Outils();
         
-        if($dao->getUtilisateur($nomUser) == null){
+        if($dao->getUtilisateur($nomUtilisateur) == null){
             $message = "Le nom d'utilisateur est inexistant !";
             $typeMessage = 'avertissement';
             $themeFooter = $themeProbleme;
@@ -48,8 +49,8 @@ else {
             $sujet = "Changement de votre mot de passe";
             $message = "Votre mot de passe a été modifié. \n\n";
             $message.= "Votre mot de passe est : " .$mdpDemande;
-            $dao->modifierMdpUser($nomUser, $mdpDemande);
-            $adrEmail = $dao->getEmailUtilisateur($nomUser);
+            $dao->modifierMdpUser($nomUtilisateur, $mdpDemande);
+            $adrEmail = $dao->getEmailUtilisateur($nomUtilisateur);
             
             $ok = $out->envoyerMail($adrEmail, $sujet, $message, "delasalle.sio.crib@gmail.Com");
             

@@ -15,20 +15,6 @@
 				<?php } ?>
 			} );
 
-			function afficher_information(msg) {
-				$('#texte_message_information').empty();
-				$('#texte_message_information').append(msg);
-				$.mobile.changePage('#affichage_message_information', {transition: "flip"});
-				//alert(msg);
-			}
-
-			function afficher_avertissement(msg) {
-				$('#texte_message_avertissement').empty();
-				$('#texte_message_avertissement').append(msg);
-				$.mobile.changePage('#affichage_message_avertissement', {transition: "flip"});
-				//alert(msg);
-			}
-
 		</script>
 	</head>
 	<body>
@@ -41,11 +27,14 @@
 				<h4 style="text-align : center; margin-top: 0px; margin-bottom: 0px;">Demander un nouveau mot de passe</h4>
 				
 				<form name="form1" action="index.php?action=DemanderMdp" data-ajax="false" method="post" data-transition ="<?php echo $transition; ?>">
-					<div data-role="fieldcontain">
-						<input type="text" name="txtDemanderMdp" id="txtDemanderMdp" data-mini="true" placeholder = "Entrez votre nom" value ="<?php echo $nom; ?>">
+					<div data-role="fieldcontain" class="ui-hide-label">
+						<label for="txtDemanderMdp">Pas de label trop pauvre</label>
+						<input type="text" name="txtDemanderMdp" id="txtDemanderMdp" data-mini="true" placeholder = "Entrez votre nom" value ="<?php echo $nomUtilisateur; ?>">
 					</div>
-					<div data-role="fieldcontain">
+					<div data-role="fieldcontain" style="margin-top: 0px; margin-bottom: 0px;">
+						<p style="margin-top: 0px; margin-bottom: 0px;">
 						<input type="submit" name="btnDemanderMdp" id="btnDemanderMdp" data-ajax="false" data-mini="true" value="M'envoyer un nouveau mot de passe">
+						</p>
 					</div>
 				</form>
 			</div>
@@ -54,6 +43,6 @@
 			</div>
 		</div>
 		
-		<?php include once('vues/dialog_message.php'); ?>
+		<?php include_once('vues/dialog_message.php'); ?>
 	</body>
 </html>

@@ -91,9 +91,9 @@ else {
                 
                 $message = "Vous avez confirmé la réservation n°".$NumReservation.".";
                 
-                $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
+                $ok = $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
                 
-                if ($out)
+                if ($ok)
                 {
                     //L'envoi de mail a réussi
                     $message = "Enregistrement effectué. <br>Vous allez recevoir un mail de confirmation.";

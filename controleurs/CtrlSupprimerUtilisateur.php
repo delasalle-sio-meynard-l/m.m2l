@@ -72,15 +72,15 @@ else {
                     
                     $message = "Vous avez été supprimé de l'application M2L";
                     
-                    $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
+                    $ok = $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
                     
-                    if ($out)
+                    if ($ok)
                     {
                         //L'envoi de mail a réussi
                         $message = "Suppresion effectuée. <br> Un mail va être envoyé à l'utilisateur";
                         $typeMessage = 'information';
                         $themeFooter = $themeNormal;
-                        //include_once ('vues/VueSupprimerUtilisateur.php');
+                        include_once ('vues/VueSupprimerUtilisateur.php');
                     }
                     else
                     {

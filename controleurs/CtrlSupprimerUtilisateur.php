@@ -61,18 +61,19 @@ else {
                 //On crée un objet Outils
                 $out = new Outils();
                 
+                //On recupere l'adresse email avant la suppression
+                    $adrEmail = $dao->getEmailUtilisateur($NomUtilisateur);
+                
                 //On supprime l'utilisateur
                 $ok = $dao->supprimerUtilisateur($NomUtilisateur);
                 if ($ok){
                     //On a pu supprimer l'utilisateur
                     
                     //On envoie un mail pour l'utilisateur
-                    //On recupere l'adresse email
-                    $adrEmail = $dao->getEmailUtilisateur($NomUtilisateur);
                     
                     $message = "Vous avez été supprimé de l'application M2L";
                     
-                    $ok = $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
+                    $ok = $out->envoyerMail($adrEmail, "MRBS / Don't Reply ", $message, "delasalle.sio.crib@gmail.Com");
                     
                     if ($ok)
                     {

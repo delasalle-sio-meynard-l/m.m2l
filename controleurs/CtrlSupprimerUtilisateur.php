@@ -63,31 +63,42 @@ else {
                 
                 //On supprime l'utilisateur
                 $ok = $dao->supprimerUtilisateur($NomUtilisateur);
-                
-                //On envoie un mail pour l'utilisateur
-                //On recupere l'adresse email
-                $adrEmail = $dao->getEmailUtilisateur($NomUtilisateur);
-                
-                $message = "Vous avez été supprimé de l'application M2L";
-                
-                $out->envoyerMail($adrEmail, "MRBS / Suppresion de M2L ", $message, "delasalle.sio.crib@gmail.Com");
-                
-                if ($out)
-                {
-                    //L'envoi de mail a réussi
-                    $message = "Enregistrement effectué. <br>Vous allez recevoir un mail de confirmation.";
-                    $typeMessage = 'information';
-                    $themeFooter = $themeNormal;
-                    include_once ('vues/VueSupprimerUtilisateur.php');
+                if ($ok){
+                    //On a pu supprimer l'utilisateur
+                    
+                    //On envoie un mail pour l'utilisateur
+                    //On recupere l'adresse email
+                    $adrEmail = $dao->getEmailUtilisateur($NomUtilisateur);
+                    
+                    $message = "Vous avez été supprimé de l'application M2L";
+                    
+                    $out->envoyerMail($adrEmail, "MRBS / Confirmation de réservation ", $message, "delasalle.sio.crib@gmail.Com");
+                    
+                    if ($out)
+                    {
+                        //L'envoi de mail a réussi
+                        $message = "Suppresion effectuée. <br> Un mail va être envoyé à l'utilisateur";
+                        $typeMessage = 'information';
+                        $themeFooter = $themeNormal;
+                        //include_once ('vues/VueSupprimerUtilisateur.php');
+                    }
+                    else
+                    {
+                        //L'envoi de mail a echoué
+                        $message = "Suppresion effectuée. <br> L'envoi du mail à l'utilisateur a rencontré un problème !";
+                        $typeMessage = 'avertissement';
+                        $themeFooter = $themeProbleme;
+                        include_once ('vues/VueSupprimerUtilisateur.php');
+                    }
                 }
-                else
-                {
-                    //L'envoi de mail a echoué
-                    $message = "Enregistrement effectué. <br>L'envoi du mail de confirmation a rencontré un problème.";
+                else {
+                    //On n'a pas pu supprimer l'utilisateur
+                    $message = "Problème lors de la suppresion de l'utilisateur !";
                     $typeMessage = 'avertissement';
                     $themeFooter = $themeProbleme;
                     include_once ('vues/VueSupprimerUtilisateur.php');
                 }
+                
                 
             }
             

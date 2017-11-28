@@ -15,6 +15,20 @@
 				<?php } ?>
 			} );
 
+			function afficher_information(msg) {
+				$('#texte_message_information').empty();
+				$('#texte_message_information').append(msg);
+				$.mobile.changePage('#affichage_message_information', {transition: "flip"});
+				//alert(msg);
+			}
+
+			function afficher_avertissement(msg) {
+				$('#texte_message_avertissement').empty();
+				$('#texte_message_avertissement').append(msg);
+				$.mobile.changePage('#affichage_message_avertissement', {transition: "flip"});
+				//alert(msg);
+			}
+
 		</script>
 	</head>
 	<body>

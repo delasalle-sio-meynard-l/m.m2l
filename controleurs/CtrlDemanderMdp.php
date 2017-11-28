@@ -34,6 +34,7 @@ else {
     else {
         include_once('modele/DAO.class.php');
         $dao = new DAO();
+        $out = new Outils();
         
         if($dao->getUtilisateur($nomUser) == null){
             $message = "Le nom d'utilisateur est inexistant !";
@@ -50,7 +51,7 @@ else {
             $dao->modifierMdpUser($nomUser, $mdpDemande);
             $adrEmail = $dao->getEmailUtilisateur($nomUser);
             
-            $ok = Envoyermail($adrEmail, $sujet, $message, "From : delasalle.sio.crib@gmail.com");
+            $ok = $out->envoyerMail($adrEmail, $sujet, $message, "delasalle.sio.crib@gmail.Com");
             
             if($ok) {
                 $message = "Vous allez recevoir un mail<br>avec votre nouveau mot de passe.";

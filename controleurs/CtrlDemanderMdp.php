@@ -17,11 +17,10 @@
 //
 
 if(!isset($_POST["btnDemanderMdp"]) == true) {
-    $nomUser = "";
+    $nomUser = '';
+    $message = '';
+    $typeMessage = '';
     $themeFooter = $themeNormal;
-    $message = "";
-    $typeMessage = "";
-    $mdpDemande = chaine_aleatoire(5);
     include_once('vues/VueDemanderMdp.php');
 }
 else {
@@ -43,13 +42,15 @@ else {
             include_once('vues/VueDemanderMdp.php');
         }
         else {
+            $mdpDemande = chaine_aleatoire(5);
+            
             $sujet = "Changement de votre mot de passe";
             $message = "Votre mot de passe a été modifié. \n\n";
             $message.= "Votre mot de passe est : " .$mdpDemande;
-            
+            $dao->modifierMdpUser($nomUser, $mdpDemande);
             $adrEmail = $dao->getEmailUtilisateur($nomUser);
             
-            $ok = envoyerMail($adrEmail, $sujet, $message, "From : delasalle.sio.crib@gmail.com");
+            $ok = mail($adrEmail, $sujet, $message, "From : delasalle.sio.crib@gmail.com");
             
             if($ok) {
                 $message = "Vous allez recevoir un mail<br>avec votre nouveau mot de passe.";

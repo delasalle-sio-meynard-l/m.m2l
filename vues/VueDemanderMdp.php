@@ -2,6 +2,20 @@
 <html>
 	<head>
 		<?php include_once('vues/head.php'); ?>
+		
+		<script>
+			// version jQuery activée
+			
+			// associe une fonction à l'événement pageinit
+			$(document).bind('pageinit', function() {
+				
+				<?php if ($typeMessage != '') { ?>
+					// affiche la boîte de dialogue 'affichage_message'
+					$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
+				<?php } ?>
+			} );
+
+		</script>
 	</head>
 	<body>
 		<div data-role="page">
@@ -14,7 +28,7 @@
 				
 				<form name="form1" action="index.php?action=DemanderMdp" data-ajax="false" method="post" data-transition ="<?php echo $transition; ?>">
 					<div data-role="fieldcontain">
-						<input type="text" name="txtDemanderMdp" id="txtDemanderMdp" data-mii="true" placeholder = "Entrez votre nom" value ="<?php echo $nom; ?>">
+						<input type="text" name="txtDemanderMdp" id="txtDemanderMdp" data-mini="true" placeholder = "Entrez votre nom" value ="<?php echo $nom; ?>">
 					</div>
 					<div data-role="fieldcontain">
 						<input type="submit" name="btnDemanderMdp" id="btnDemanderMdp" data-ajax="false" data-mini="true" value="M'envoyer un nouveau mot de passe">

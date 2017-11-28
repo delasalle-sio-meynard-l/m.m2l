@@ -33,7 +33,7 @@ else {
             $message = "La réservation n'existe pas !";
             $typeMessage = 'avertissement';
             $themeFooter = $themeProbleme;
-            include_once ('vues/VueConfirmerReservation.php');
+            include_once ('vues/VueAnnulerReservation.php');
             //echo "La réservation n'existe pas !";
         }
         else
@@ -49,7 +49,7 @@ else {
                 $typeMessage = 'avertissement';
                 $themeFooter = $themeProbleme;
                 $toutEstBon = false;
-                include_once ('vues/VueConfirmerReservation.php');
+                include_once ('vues/VueAnnulerReservation.php');
                 //echo "Vous n'êtes pas l'auteur de cette réservation !";
             }
             
@@ -61,7 +61,7 @@ else {
                 $typeMessage = 'avertissement';
                 $themeFooter = $themeProbleme;
                 $toutEstBon = false;
-                include_once ('vues/VueConfirmerReservation.php');
+                include_once ('vues/VueAnnulerReservation.php');
                 //echo "La réservation est passée !";
             }
             

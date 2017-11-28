@@ -27,7 +27,8 @@ else {
             if($nouveauMdp != $confirmationMdp) {
                 $message = 'Le nouveau mot de passe et<br>sa confirmation sont différents';
                 $typeMessage = 'avertissement';
-                //include_once('vues/VueChangerDeMdp.php');
+                $themeFooter = $themeProbleme;
+                include_once('vues/VueChangerDeMdp.php');
             }
             else {
                 include_once ('modele/DAO.class.php');

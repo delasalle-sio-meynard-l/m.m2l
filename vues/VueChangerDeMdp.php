@@ -9,24 +9,13 @@
 			// associe une fonction à l'événement pageinit
 			$(document).bind('pageinit', function() {
 				$('#caseAfficherMdp').click(afficherMdp);
-
-				//$('#formModificationMdp').submit(validationGenerale);
 				
-				//alert("<?php echo $typeMessage; ?>");
-				//alert("<?php echo $message; ?>");
-				//alert("<?php echo $nouveauMdp; ?>");
-				//alert("<?php echo $confirmationMdp; ?>");
-				
-				<?php if($typeMessage == 'avertissement') { ?>
-					afficher_avertissement("<?php echo $message; ?> ");
+				<?php if ($typeMessage != '') { ?>
+					// affiche la boîte de dialogue 'affichage_message'
+					$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
 				<?php } ?>
-
-				<?php if($typeMessage == 'information') { ?> 
-					afficher_information("<?php echo $message; ?> ");
-				<?php } ?>
-
-			});
-
+			} );
+			
 			function afficherMdp() {
 				if($("#caseAfficherMdp").is(":checked")){
 					$('#txtNouveauMdp').attr('type', 'text');
@@ -45,19 +34,6 @@
 				}
 
 				return true;
-			}
-			function afficher_information(msg) {
-				$('#texte_message_information').empty();
-				$('#texte_message_information').append(msg);
-				$.mobile.changePage('#affichage_message_information', {transition: "flip"});
-				//alert(msg);
-			}
-
-			function afficher_avertissement(msg) {
-				$('#texte_message_avertissement').empty();
-				$('#texte_message_avertissement').append(msg);
-				$.mobile.changePage('#affichage_message_avertissement', {transition: "flip"});
-				//alert(msg);
 			}
 
 		</script>

@@ -36,7 +36,7 @@
 						</div>														
 						<div data-role="fieldcontain" style="margin-top: 0px; margin-bottom: 0px;">
 							<p style="margin-top: 0px; margin-bottom: 0px;">
-								<input type="submit" name="btnConfirmer" id="btnConfirmer" data-mini="true" data-ajax="false" value="Confirmer la réservation">
+								<input type="submit" name="btnConfirmer" id="btnConfirmer" data-mini="true" data-ajax="false" value="Annuler la réservation">
 							</p>
 						</div>
 				</form>

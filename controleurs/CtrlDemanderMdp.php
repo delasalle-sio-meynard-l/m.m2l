@@ -50,7 +50,7 @@ else {
             $dao->modifierMdpUser($nomUser, $mdpDemande);
             $adrEmail = $dao->getEmailUtilisateur($nomUser);
             
-            $ok = mail($adrEmail, $sujet, $message, "From : delasalle.sio.crib@gmail.com");
+            $ok = Envoyermail($adrEmail, $sujet, $message, "From : delasalle.sio.crib@gmail.com");
             
             if($ok) {
                 $message = "Vous allez recevoir un mail<br>avec votre nouveau mot de passe.";

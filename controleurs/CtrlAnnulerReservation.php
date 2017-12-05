@@ -18,7 +18,7 @@ else {
         $message = 'Données incomplètes ou incorrectes !';
         $typeMessage = 'avertissement';
         $themeFooter = $themeProbleme;
-        //include_once ('vues/VueConfirmerReservation.php');
+        include_once ('vues/VueConfirmerReservation.php');
     }
     else {
         // connexion du serveur web à la base MySQL

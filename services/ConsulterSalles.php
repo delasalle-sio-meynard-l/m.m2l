@@ -30,22 +30,23 @@ else
     
     if ( $dao->getNiveauUtilisateur($nom, $mdp) == "inconnu" )
         $msg = "Erreur : authentification incorrecte.";
-        else
-        {
+    else
+    {
             
-            // récupération des réservations à venir créées par l'utilisateur
-            $lesSalles = $dao->getLesSalles();
-            $NumSalle = sizeof($lesSalles);
+        // récupération des réservations à venir créées par l'utilisateur
+        $lesSalles = $dao->getLesSalles();
+        $NumSalle = sizeof($lesSalles);
             
-            // préparation d'un message précédent la liste
-            if ($NumSalle >1) {
-                $message = $NumSalle . " salles disponibles en réservation : ";
-            }
-            else {
-                $message = $NumSalle . " salle disponible en réservation : ";
-            }
-        // ferme la connexion à MySQL
-        unset($dao);
+        // préparation d'un message précédent la liste
+        if ($NumSalle >1) {
+            $msg = $NumSalle . " salles disponibles en réservation : ";
+        }
+        else {
+            $msg = $NumSalle . " salle disponible en réservation : ";
+        }
+    }
+    // ferme la connexion à MySQL
+    unset($dao);
 }
 // création du flux XML en sortie
 creerFluxXML ($msg, $lesSalles);
@@ -58,13 +59,13 @@ exit;
 
 
 // création du flux XML en sortie
-function creerFluxXML($msg, $lesReservations)
+function creerFluxXML($msg, $lesSalles)
 {	// crée une instance de DOMdocument (DOM : Document Object Model)
     $doc = new DOMDocument();
     
     // specifie la version et le type d'encodage
     $doc->version = '1.0';
-    $doc->encoding = 'ISO-8859-1';
+    $doc->encoding = 'UTF-8';
     
     // crée un commentaire et l'encode en ISO
     $elt_commentaire = $doc->createComment('Service web ConsulterReservations - BTS SIO - Lycée De La Salle - Rennes');
@@ -84,34 +85,26 @@ function creerFluxXML($msg, $lesReservations)
     $elt_data->appendChild($elt_donnees);
     
     // traitement des réservations
-    if (sizeof($lesReservations) > 0) {
-        foreach ($lesReservations as $uneReservation)
+    if (sizeof($lesSalles) > 0) {
+        foreach ($lesSalles as $uneSalle)
         {
             // crée un élément vide 'reservation'
-            $elt_reservation = $doc->createElement('reservation');
+            $elt_salle = $doc->createElement('salle');
             // place l'élément 'reservation' dans l'élément 'donnees'
-            $elt_donnees->appendChild($elt_reservation);
+            $elt_donnees->appendChild($elt_salle);
             
             // crée les éléments enfants de l'élément 'reservation'
-            $elt_id         = $doc->createElement('id', $uneReservation->getId());
-            $elt_reservation->appendChild($elt_id);
-            $elt_timestamp  = $doc->createElement('timestamp', $uneReservation->getTimestamp());
-            $elt_reservation->appendChild($elt_timestamp);
-            $elt_start_time = $doc->createElement('start_time', date('Y-m-d H:i:s', $uneReservation->getStart_time()));
-            $elt_reservation->appendChild($elt_start_time);
-            $elt_end_time   = $doc->createElement('end_time', date('Y-m-d H:i:s', $uneReservation->getEnd_time()));
-            $elt_reservation->appendChild($elt_end_time);
-            $elt_room_name  = $doc->createElement('room_name', $uneReservation->getRoom_name());
-            $elt_reservation->appendChild($elt_room_name);
-            $elt_status     = $doc->createElement('status', $uneReservation->getStatus());
-            $elt_reservation->appendChild($elt_status);
-            
-            // le digicode n'est renseigné que pour les réservations confirmées
-            if ( $uneReservation->getStatus() == "0")		// réservation confirmée
-                $elt_digicode = $doc->createElement('digicode', utf8_encode($uneReservation->getDigicode()));
-                else										// réservation provisoire
-                    $elt_digicode = $doc->createElement('digicode', "");
-                    $elt_reservation->appendChild($elt_digicode);
+            $elt_id                = $doc->createElement('id', $uneSalle->getId());
+            $elt_salle->appendChild($elt_id);
+            $elt_roomName          = $doc->createElement('room_name', $uneSalle->getRoom_name());
+            $elt_salle->appendChild($elt_roomName);
+            $elt_capacity          = $doc->createElement('capacity', $uneSalle->getCapacity());
+            $elt_salle->appendChild($elt_capacity);
+            $elt_area_name         = $doc->createElement('area_name', $uneSalle->getAreaName());
+            $elt_salle->appendChild($elt_area_name);
+            $elt_area_admin_email  = $doc->createElement('area_admin_email', $uneSalle->getId());
+            $elt_salle->appendChild($elt_area_admin_email);
+
         }
     }
     

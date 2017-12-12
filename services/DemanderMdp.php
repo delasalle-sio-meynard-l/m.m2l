@@ -18,7 +18,7 @@
     
         if($nomUtilisateur == "" || $mdpUtilisateur =="") {
             $msg = "Erreur : Données incomplètes";
-        }
+        } 
         else {
             include_once ('../modele/DAO.class.php');
             $dao = new DAO();

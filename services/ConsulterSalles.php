@@ -102,7 +102,7 @@ function creerFluxXML($msg, $lesSalles)
             $elt_salle->appendChild($elt_capacity);
             $elt_area_name         = $doc->createElement('area_name', $uneSalle->getAreaName());
             $elt_salle->appendChild($elt_area_name);
-            $elt_area_admin_email  = $doc->createElement('area_admin_email', $uneSalle->getId());
+            $elt_area_admin_email  = $doc->createElement('area_admin_email', "chemin.lorette@lorraine-sport.net");
             $elt_salle->appendChild($elt_area_admin_email);
 
         }

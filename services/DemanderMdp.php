@@ -41,7 +41,7 @@ function chaine_aleatoire($nb_car, $chaine = 'azertyuiopqsdfghjklmwxcvbn12345678
         
         else {
             $adrMail = $unUtilisateur->getEmail();
-            $password = Outils::creeMdp();
+            $password = Outils::creerMdp();
             $dao->modifierMdpUser($nom, $password);
             $level = $dao->getNiveauUtilisateur($nom, $password);
             

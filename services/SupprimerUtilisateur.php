@@ -33,6 +33,35 @@ else
     }
     else 
     {
-        if (1==1){}
+        if ($dao->existeUtilisateur($name) == false)
+        {
+            $msg = "Erreur : nom d'utilisateur inexistant.";
+        }
+        else
+        {
+            if ($dao->aPasseDesReservations($name))
+            {
+                $msg = "Erreur : cet utilisateur a passé des réservations à venir.";
+            }
+            else 
+            {
+                $dao->supprimerUtilisateur($name);
+                
+                $adresseDestinataire = $dao->getEmailUtilisateur($NomUtilisateur);
+                
+                $sujet = "MRBS / Don't Reply ";
+                $message = "Vous avez été supprimé de l'application M2L";
+                $ok = Outils::envoyerMail($adresseDestinataire, $sujet, $message, "delasalle.sio.crib@gmail.Com");
+                
+                if ($ok)
+                {
+                    $msg = "Suppression effectuée ; un mail va être envoyé à l'utilisateur.";
+                }
+                else
+                {
+                    $msg = "Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+                }
+            }
+        }
     }
 }

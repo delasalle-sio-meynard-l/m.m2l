@@ -30,4 +30,4 @@
     unset($dao);
     
     if($lang == "xml")
-        creerFluxSML ($message)
+        creerFluxXML ($message);

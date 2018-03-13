@@ -8,6 +8,9 @@ include_once ('../modele/parametres.localhost.php');
 // la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
 if ( empty ($_GET ["nom"]) == true)  $nom = "";  else   $nom = $_GET ["nom"];
 if ( empty ($_GET ["mdp"]) == true)  $mdp = "";  else   $mdp = $_GET ["mdp"];
+if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_REQUEST["lang"]);
+
+if ($lang != "json") $lang = "xml";
 
 // si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
 // la fonction $_POST récupère une donnée envoyées par la méthode POST
@@ -48,9 +51,12 @@ else
     // ferme la connexion à MySQL
     unset($dao);
 }
-// création du flux XML en sortie
-creerFluxXML ($msg, $lesSalles);
-
+// création du flux en sortie
+if ($lang == "xml")
+    creerFluxXML ($msg, $lesSalles);
+else
+    creerFluxJSON ($msg, $lesSalles);
+        
 // fin du programme (pour ne pas enchainer sur la fonction qui suit)
 exit;
 
@@ -68,7 +74,7 @@ function creerFluxXML($msg, $lesSalles)
     $doc->encoding = 'UTF-8';
     
     // crée un commentaire et l'encode en ISO
-    $elt_commentaire = $doc->createComment('Service web ConsulterReservations - BTS SIO - Lycée De La Salle - Rennes');
+    $elt_commentaire = $doc->createComment('Service web ConsulterSalles - BTS SIO - Lycée De La Salle - Rennes');
     // place ce commentaire à la racine du document XML
     $doc->appendChild($elt_commentaire);
     
@@ -113,5 +119,60 @@ function creerFluxXML($msg, $lesSalles)
     
     // renvoie le contenu XML
     echo $doc->saveXML();
+    return;
+}
+
+// création du flux JSON en sortie
+function creerFluxJSON($msg, $lesSalles)
+{
+    /* Exemple de code JSON
+     {
+     "data":{
+     "reponse":"Vous avez effectu\u00e9 2 r\u00e9servation(s).",
+     "donnees":{
+     "reservation":[
+     {
+     "id":"1",
+     "room_name":"Multimédia",
+     "capacity": "25",
+     "area_name": "Informatique - multimédia"
+     },
+     {
+     "id":"1",
+     "room_name":"Multimédia",
+     "capacity": "25",
+     "area_name": "Informatique - multimédia"
+     }
+     ]
+     }
+     }
+     }
+     */
+    
+    // construction d'un tableau contenant les réservations
+    $lesLignesDuTableau = array();
+    if (sizeof($lesSalles) > 0) {
+        foreach ($lesSalles as $uneSalle)
+        {	// crée une ligne dans le tableau
+            $uneLigne = array();
+            $uneLigne["id"] = $uneSalle->getId();
+            $uneLigne["room_name"] = $uneSalle->getRoom_name();
+            $uneLigne["capacity"] = $uneSalle->getCapacity();
+            $uneLigne["area_name"] = $uneSalle->getAreaName();
+                    
+                    $lesLignesDuTableau[] = $uneLigne;
+        }
+    }
+    // construction de l'élément "reservation"
+    $elt_salle = ["salle" => $lesLignesDuTableau];
+    
+    // construction de l'élément "data"
+    $elt_data = ["reponse" => $msg, "donnees" => $elt_salle];
+    
+    // construction de la racine
+    $elt_racine = ["data" => $elt_data];
+    
+    // retourne le contenu JSON (l'option JSON_PRETTY_PRINT gère les sauts de ligne et l'indentation)
+    echo json_encode($elt_racine, JSON_PRETTY_PRINT);
     return;
 }

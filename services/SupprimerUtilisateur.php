@@ -19,6 +19,10 @@ if ( $nomAdmin == "" && $mdpAdmin == "" && $name == "")
     if ( empty ($_POST ["name"]) == true)  $name = "";  else   $name = $_POST ["$name"];
 }
 
+if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_REQUEST["lang"]);
+
+if ($lang != "json") $lang = "xml";
+
 // Contrôle de la présence des paramètres
 if ( $nomAdmin == "" || $mdpAdmin == "" || $name == "")
 {	$msg = "Erreur : données incomplètes.";
@@ -65,3 +69,49 @@ else
         }
     }
 }
+
+if ($lang == "xml")
+    creerFluxXML ($msg, $lesSalles);
+    else
+        creerFluxJSON ($msg, $lesSalles);
+        
+// fin du programme (pour ne pas enchainer sur la fonction qui suit)
+exit;
+        
+function creerFluxXML($msg, $lesSalles)
+{	// crée une instance de DOMdocument (DOM : Document Object Model)
+    $doc = new DOMDocument();
+    
+    // specifie la version et le type d'encodage
+    $doc->version = '1.0';
+    $doc->encoding = 'UTF-8';
+    
+    // crée un commentaire et l'encode en ISO
+    $elt_commentaire = $doc->createComment('Service web SupprimerUtilisateur - BTS SIO - Lycée De La Salle - Rennes');
+    // place ce commentaire à la racine du document XML
+    $doc->appendChild($elt_commentaire);
+    
+    // crée l'élément 'data' à la racine du document XML
+    $elt_data = $doc->createElement('data');
+    $doc->appendChild($elt_data);
+    
+    // place l'élément 'reponse' dans l'élément 'data'
+    $elt_reponse = $doc->createElement('reponse', $msg);
+    $elt_data->appendChild($elt_reponse);
+    
+    // place l'élément 'donnees' dans l'élément 'data'
+    $elt_donnees = $doc->createElement('donnees');
+    $elt_data->appendChild($elt_donnees);
+    
+   
+    
+    // Mise en forme finale
+    $doc->formatOutput = true;
+    
+    // renvoie le contenu XML
+    echo $doc->saveXML();
+    return;
+}
+
+
+

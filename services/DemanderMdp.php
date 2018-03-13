@@ -1,5 +1,5 @@
 <?php
-
+     
     // inclusion de la classe Outils
     include_once ('../modele/Outils.class.php');
     // inclusion des paramètres de l'application
@@ -7,13 +7,12 @@
 
     // Récupération des données transmises
     // la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
-    if ( empty ($_GET ["nom"]) == true)  $nom = "";  else   $nom = $_GET ["nom"];
-    
-    // si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
     // la fonction $_POST récupère une donnée envoyées par la méthode POST
-    if ( $nom == "")
-    {	if ( empty ($_POST ["nom"]) == true)  $nom = "";  else   $nom = $_POST ["nom"];
-    }
+    // la fonction $_REQUEST récupère par défaut le contenu des variables $_GET, $_POST, $_COOKIE
+    if ( empty ($_REQUEST["nom"]) == true)  $nom = "";  else   $nom = $_REQUEST["nom"];
+    if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_REQUEST["lang"]);
+    // "xml" par défaut si le paramètre lang est absent ou incorrect
+    if ($lang != "json") $lang = "xml";
     
     if($nom == "") {
         $message = "Erreur : Données incomplètes";
@@ -49,14 +48,16 @@
         }
     }
         
-        unset($dao);
-        
-        // création du flux XML en sortie
+    // ferme la connexion à MySQL
+    unset($dao);
+    // création du flux en sortie
+    if ($lang == "xml")
         creerFluxXML ($message);
+    else
+        creerFluxJSON ($message);
         
         // fin du programme (pour ne pas enchainer sur la fonction qui suit)
         exit;
-        
         
         // création du flux XML en sortie
         function creerFluxXML($message)
@@ -86,6 +87,12 @@
             // renvoie le contenu XML
             echo $doc->saveXML();
             return;
+        }
+        
+        function creerFluxJSON($message)
+        {
+            
+                
         }
         ?>
         

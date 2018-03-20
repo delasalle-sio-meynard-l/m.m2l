@@ -8,7 +8,7 @@ include_once ('../modele/parametres.localhost.php');
 // la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
 if ( empty ($_GET ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_GET ["nomAdmin"];
 if ( empty ($_GET ["mdpAdmin"]) == true) $mdpAdmin = "";  else   $mdpAdmin = $_GET ["mdpAdmin"];
-if ( empty ($_GET ["name"]) == true)  $name = "";  else   $name = $_GET ["$name"];
+if ( empty ($_GET ["name"]) == true)  $name = "";  else   $name = $_GET ["name"];
 
 // si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
 // la fonction $_POST récupère une donnée envoyées par la méthode POST
@@ -16,7 +16,7 @@ if ( $nomAdmin == "" && $mdpAdmin == "" && $name == "")
 {	
     if ( empty ($_POST ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_POST ["nomAdmin"];
     if ( empty ($_POST ["mdpAdmin"]) == true) $mdpAdmin = "";  else   $mdpAdmin = $_POST ["mdpAdmin"];
-    if ( empty ($_POST ["name"]) == true)  $name = "";  else   $name = $_POST ["$name"];
+    if ( empty ($_POST ["name"]) == true)  $name = "";  else   $name = $_POST ["name"];
 }
 
 if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_REQUEST["lang"]);
@@ -49,9 +49,10 @@ else
             }
             else 
             {
+                $adresseDestinataire = $dao->getEmailUtilisateur($name);
+                
                 $dao->supprimerUtilisateur($name);
                 
-                $adresseDestinataire = $dao->getEmailUtilisateur($NomUtilisateur);
                 
                 $sujet = "MRBS / Don't Reply ";
                 $message = "Vous avez été supprimé de l'application M2L";
@@ -71,14 +72,14 @@ else
 }
 
 if ($lang == "xml")
-    creerFluxXML ($msg, $lesSalles);
+    creerFluxXML ($msg);
     else
-        creerFluxJSON ($msg, $lesSalles);
+        creerFluxJSON ($msg);
         
 // fin du programme (pour ne pas enchainer sur la fonction qui suit)
 exit;
         
-function creerFluxXML($msg, $lesSalles)
+function creerFluxXML($msg)
 {	// crée une instance de DOMdocument (DOM : Document Object Model)
     $doc = new DOMDocument();
     
@@ -113,5 +114,20 @@ function creerFluxXML($msg, $lesSalles)
     return;
 }
 
+// création du flux JSON en sortie
+function creerFluxJSON($msg)
+{
+   
+    
+    // construction de l'élément "data"
+    $elt_data = ["reponse" => $msg, "donnees" => $elt_salle];
+    
+    // construction de la racine
+    $elt_racine = ["data" => $elt_data];
+    
+    // retourne le contenu JSON (l'option JSON_PRETTY_PRINT gère les sauts de ligne et l'indentation)
+    echo json_encode($elt_racine, JSON_PRETTY_PRINT);
+    return;
+}
 
 

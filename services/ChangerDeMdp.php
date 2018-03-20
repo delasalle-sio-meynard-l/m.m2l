@@ -9,7 +9,8 @@ if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_R
 if ($lang != "json") $lang = "xml";
 
 if ( $nom == "" || $ancienMdp == "" || $nouveauMdp == "" || $confirmationMdp == "")
-{	$msg = "Erreur : données incomplètes.";
+{	
+    $msg = "Erreur : données incomplètes.";
 }
 else
 {	

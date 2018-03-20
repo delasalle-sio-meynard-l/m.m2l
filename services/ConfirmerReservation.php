@@ -5,18 +5,18 @@ include_once ('../modele/Outils.class.php');
 include_once ('../modele/parametres.localhost.php');
 
 // Récupération des données transmises
-// la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
-if ( empty ($_GET ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_GET ["nomAdmin"];
-if ( empty ($_GET ["mdpAdmin"]) == true) $mdpAdmin = "";  else   $mdpAdmin = $_GET ["mdpAdmin"];
-if ( empty ($_GET ["name"]) == true)  $name = "";  else   $name = $_GET ["name"];
+// la fonction $_GET récupère une donnée passée en paramètre $nom l'URL par la méthode GET
+if ( empty ($_GET ["nom"]) == true)  $nom = "";  else   $nom = $_GET ["nom"];
+if ( empty ($_GET ["mdp"]) == true) $mdp = "";  else   $mdp = $_GET ["mdp"];
+if ( empty ($_GET ["numreservation"]) == true)  $numReservation = "";  else   $numReservation = $_GET ["numreservation"];
 
 // si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
 // la fonction $_POST récupère une donnée envoyées par la méthode POST
-if ( $nomAdmin == "" && $mdpAdmin == "" && $name == "")
+if ( $nom == "" && $mdp == "" && $numReservation == "")
 {
-    if ( empty ($_POST ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_POST ["nomAdmin"];
-    if ( empty ($_POST ["mdpAdmin"]) == true) $mdpAdmin = "";  else   $mdpAdmin = $_POST ["mdpAdmin"];
-    if ( empty ($_POST ["name"]) == true)  $name = "";  else   $name = $_POST ["name"];
+    if ( empty ($_POST ["nom"]) == true)  $nom = "";  else   $nom = $_POST ["nom"];
+    if ( empty ($_POST ["mdp"]) == true) $mdp = "";  else   $mdp = $_POST ["mdp"];
+    if ( empty ($_POST ["numreservation"]) == true)  $numReservation = "";  else   $numReservation = $_POST ["numreservation"];
 }
 
 if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_REQUEST["lang"]);
@@ -24,7 +24,7 @@ if ( empty ($_REQUEST["lang"]) == true) $lang = "";  else $lang = strtolower($_R
 if ($lang != "json") $lang = "xml";
 
 // Contrôle de la présence des paramètres
-if ( $nomAdmin == "" || $mdpAdmin == "" || $name == "")
+if ( $nom == "" || $mdp == "" || $numReservation == "")
 {	$msg = "Erreur : données incomplètes.";
 }
 else
@@ -32,39 +32,55 @@ else
     include_once ('../modele/DAO.class.php');
     $dao = new DAO();
     
-    if ( $dao->getNiveauUtilisateur($nomAdmin, $mdpAdmin) != "administrateur" ) {
+    if ( $dao->getNiveauUtilisateur($nom, $mdp) == "inconnu" ) {
         $msg = "Erreur : authentification incorrecte.";
     }
     else
     {
-        if ($dao->existeUtilisateur($name) == false)
+        if ($dao->existeReservation($numReservation) == false)
         {
-            $msg = "Erreur : nom d'utilisateur inexistant.";
+            $msg = "Erreur : numéro de réservation inexistant.";
         }
         else
         {
-            if ($dao->aPasseDesReservations($name))
+            if ($dao->estLeCreateur($nom, $numReservation) == false)
             {
-                $msg = "Erreur : cet utilisateur a passé des réservations à venir.";
+                $msg = "Erreur : vous n'êtes pas l'auteur de cette réservation.";
             }
             else
             {
-                $adresseDestinataire = $dao->getEmailUtilisateur($name);
+                $laReservation = $dao->getReservation($numReservation);
                 
-                $dao->supprimerUtilisateur($name);
-                
-                
-                $sujet = "MRBS / Don't Reply ";
-                $message = "Vous avez été supprimé de l'application M2L";
-                $ok = Outils::envoyerMail($adresseDestinataire, $sujet, $message, "delasalle.sio.crib@gmail.Com");
-                
-                if ($ok)
+                if($laReservation->getStatus() == 0)
                 {
-                    $msg = "Suppression effectuée ; un mail va être envoyé à l'utilisateur.";
+                    $msg = "Erreur : cette réservation est déjà confirmée.";
                 }
                 else
                 {
-                    $msg = "Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.";
+                    if($laReservation->getEnd_time() < time())
+                    {
+                        $msg = "Erreur : cette réservation est déjà passée.";
+                    }
+                    else
+                    {
+                        $adresseDestinataire = $dao->getEmailUtilisateur($nom);
+                        
+                        $dao->confirmerReservation($numReservation);
+                        
+                        
+                        $sujet = "MRBS / Confirmation de réservation ";
+                        $message = "Vous avez confirmé la réservation n°".$numReservation.".";
+                        $ok = Outils::envoyerMail($adresseDestinataire, $sujet, $message, "delasalle.sio.crib@gmail.Com");
+                        
+                        if ($ok)
+                        {
+                            $msg = "Enregistrement effectué ; vous allez recevoir un mail de confirmation.";
+                        }
+                        else
+                        {
+                            $msg = "Enregistrement effectué ; l&#39;envoi du mail de confirmation a rencontré un problème.";
+                        }
+                    }
                 }
             }
         }

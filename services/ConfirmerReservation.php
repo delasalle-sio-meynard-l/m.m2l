@@ -13,7 +13,7 @@ if ( empty ($_GET ["name"]) == true)  $name = "";  else   $name = $_GET ["name"]
 // si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
 // la fonction $_POST récupère une donnée envoyées par la méthode POST
 if ( $nomAdmin == "" && $mdpAdmin == "" && $name == "")
-{	
+{
     if ( empty ($_POST ["nomAdmin"]) == true)  $nomAdmin = "";  else   $nomAdmin = $_POST ["nomAdmin"];
     if ( empty ($_POST ["mdpAdmin"]) == true) $mdpAdmin = "";  else   $mdpAdmin = $_POST ["mdpAdmin"];
     if ( empty ($_POST ["name"]) == true)  $name = "";  else   $name = $_POST ["name"];
@@ -35,7 +35,7 @@ else
     if ( $dao->getNiveauUtilisateur($nomAdmin, $mdpAdmin) != "administrateur" ) {
         $msg = "Erreur : authentification incorrecte.";
     }
-    else 
+    else
     {
         if ($dao->existeUtilisateur($name) == false)
         {
@@ -47,7 +47,7 @@ else
             {
                 $msg = "Erreur : cet utilisateur a passé des réservations à venir.";
             }
-            else 
+            else
             {
                 $adresseDestinataire = $dao->getEmailUtilisateur($name);
                 
@@ -76,58 +76,59 @@ if ($lang == "xml")
     else
         creerFluxJSON ($msg);
         
-// fin du programme (pour ne pas enchainer sur la fonction qui suit)
-exit;
+        // fin du programme (pour ne pas enchainer sur la fonction qui suit)
+        exit;
         
-function creerFluxXML($msg)
-{	// crée une instance de DOMdocument (DOM : Document Object Model)
-    $doc = new DOMDocument();
-    
-    // specifie la version et le type d'encodage
-    $doc->version = '1.0';
-    $doc->encoding = 'UTF-8';
-    
-    // crée un commentaire et l'encode en ISO
-    $elt_commentaire = $doc->createComment('Service web SupprimerUtilisateur - BTS SIO - Lycée De La Salle - Rennes');
-    // place ce commentaire à la racine du document XML
-    $doc->appendChild($elt_commentaire);
-    
-    // crée l'élément 'data' à la racine du document XML
-    $elt_data = $doc->createElement('data');
-    $doc->appendChild($elt_data);
-    
-    // place l'élément 'reponse' dans l'élément 'data'
-    $elt_reponse = $doc->createElement('reponse', $msg);
-    $elt_data->appendChild($elt_reponse);
-    
-    // place l'élément 'donnees' dans l'élément 'data'
-    $elt_donnees = $doc->createElement('donnees');
-    $elt_data->appendChild($elt_donnees);
-    
-   
-    
-    // Mise en forme finale
-    $doc->formatOutput = true;
-    
-    // renvoie le contenu XML
-    echo $doc->saveXML();
-    return;
-}
-
-// création du flux JSON en sortie
-function creerFluxJSON($msg)
-{
-   
-    
-    // construction de l'élément "data"
-    $elt_data = ["reponse" => $msg, "donnees"];
-    
-    // construction de la racine
-    $elt_racine = ["data" => $elt_data];
-    
-    // retourne le contenu JSON (l'option JSON_PRETTY_PRINT gère les sauts de ligne et l'indentation)
-    echo json_encode($elt_racine, JSON_PRETTY_PRINT);
-    return;
-}
-
-
+        function creerFluxXML($msg)
+        {	// crée une instance de DOMdocument (DOM : Document Object Model)
+            $doc = new DOMDocument();
+            
+            // specifie la version et le type d'encodage
+            $doc->version = '1.0';
+            $doc->encoding = 'UTF-8';
+            
+            // crée un commentaire et l'encode en ISO
+            $elt_commentaire = $doc->createComment('Service web SupprimerUtilisateur - BTS SIO - Lycée De La Salle - Rennes');
+            // place ce commentaire à la racine du document XML
+            $doc->appendChild($elt_commentaire);
+            
+            // crée l'élément 'data' à la racine du document XML
+            $elt_data = $doc->createElement('data');
+            $doc->appendChild($elt_data);
+            
+            // place l'élément 'reponse' dans l'élément 'data'
+            $elt_reponse = $doc->createElement('reponse', $msg);
+            $elt_data->appendChild($elt_reponse);
+            
+            // place l'élément 'donnees' dans l'élément 'data'
+            $elt_donnees = $doc->createElement('donnees');
+            $elt_data->appendChild($elt_donnees);
+            
+            
+            
+            // Mise en forme finale
+            $doc->formatOutput = true;
+            
+            // renvoie le contenu XML
+            echo $doc->saveXML();
+            return;
+        }
+        
+        // création du flux JSON en sortie
+        function creerFluxJSON($msg)
+        {
+            
+            
+            // construction de l'élément "data"
+            $elt_data = ["reponse" => $msg, "donnees"];
+            
+            // construction de la racine
+            $elt_racine = ["data" => $elt_data];
+            
+            // retourne le contenu JSON (l'option JSON_PRETTY_PRINT gère les sauts de ligne et l'indentation)
+            echo json_encode($elt_racine, JSON_PRETTY_PRINT);
+            return;
+        }
+        
+        
+        

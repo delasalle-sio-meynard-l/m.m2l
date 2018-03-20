@@ -31,3 +31,10 @@
     
     if($lang == "xml")
         creerFluxXML ($message);
+    else 
+        creerFluxJSON($message);
+    exit;
+    
+    function creerFluxXML($message) {
+        
+    }
